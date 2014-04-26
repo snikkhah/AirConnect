@@ -1,0 +1,5 @@
+c:\users\sina\documents\visual studio 2012\Projects\AirConnect\AirConnect\bin\AirConnect.dll
+c:\users\sina\documents\visual studio 2012\Projects\AirConnect\AirConnect\bin\AirConnect.pdb
+c:\users\sina\documents\visual studio 2012\Projects\AirConnect\AirConnect\obj\Debug\AirConnect.csprojResolveAssemblyReference.cache
+c:\users\sina\documents\visual studio 2012\Projects\AirConnect\AirConnect\obj\Debug\AirConnect.dll
+c:\users\sina\documents\visual studio 2012\Projects\AirConnect\AirConnect\obj\Debug\AirConnect.pdb
