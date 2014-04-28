@@ -33,9 +33,10 @@
 			    <li><a href="main.aspx">Main</a></li>
 			    <li><a href="#about">About</a></li>
               </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <asp:Button Text="Log-in" runat="server" class="btn btn-success" ID="login" OnClick="login_Click" style="margin-top: 10px;" />
-                </ul>
+                <div class="navbar-collapse collapse">
+                    <asp:Button Text="Log-in" runat="server" class="btn btn-success navbar-btn navbar-right" ID="login" OnClick="login_Click" style="margin-top: 10px;" />
+                    <asp:Label runat="server" ID="status" class="navbar-text navbar-right" ForeColor="GrayText" style="margin-right: 10px;"></asp:Label>
+                </div>
             </div><!-- /.nav-collapse -->
           </div><!-- /.container -->
         </div><!-- /.navbar -->  
@@ -47,33 +48,38 @@
 				    <form method="post">
 				      <table class="table table-hover" >
 				        <tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">Email</td>
-				          <td><asp:TextBox runat="server" ID="email" type="text" name="email" value=""/></td>
-				          <td class="error"></td>
+                            <div class="input-group">
+				              <span class="input-group-addon">Email</span>
+				              <asp:TextBox runat="server" ID="email" type="text" name="email" value="" class="form-control" placeholder="Please enter your Email" />
+				            </div>
 				        </tr>
 				        <tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">Password</td>
-				          <td><asp:TextBox runat="server" ID="password" type="text" name="password" value=""/></td>
-				          <td class="error"></td>
+				          <div class="input-group">
+				            <span class="input-group-addon">Password</span>
+				            <asp:TextBox runat="server" ID="password" type="text" name="password" value="" class="form-control" placeholder="Please enter your Password"/>
+				          </div>
 				        </tr>
 				        <tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">Confirm Password</td>
-				          <td><asp:TextBox runat="server" ID="confirmPassword" type="text" name="confirmPassword" value=""/></td>
-				          <td class="error"></td>
+                            <div class="input-group">
+				            <span class="input-group-addon">Confirm Password</span>
+				            <asp:TextBox runat="server" ID="confirmPassword" type="text" name="confirmPassword" value="" class="form-control" placeholder="Please enter your Password again"/>
+				            </div>
 				        </tr>				
 						<tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">First Name</td>
-				          <td><asp:TextBox runat="server" ID="firstName" type="text" name="firstName" value=""/></td>
-				        </tr>
+                            <div class="input-group">
+				            <span class="input-group-addon">First Name</span>
+				            <asp:TextBox runat="server" ID="firstName" type="text" name="firstName" value="" class="form-control" placeholder="Please enter your First Name"/>
+				            </div>
 						<tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">Last Name</td>
-				          <td><asp:TextBox runat="server" ID="lastName" type="text" name="firstName" value=""/></td>
-				        </tr>				      
+                            <div class="input-group">
+				            <span class="input-group-addon">Last Name</span>
+				            <asp:TextBox runat="server" ID="lastName" type="text" name="firstName" value="" class="form-control" placeholder="Please enter your Last Name"/>
+                            </div>				      
 					</table>
 <!--				      <input type="submit">  -->
 				    </form>
+                    <li><asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" /></li>
 				    <asp:Button runat="server" ID="submitButton" Text="Submit" class="btn btn-primary" OnClick="submitButton_Click"/>
-			        <li><asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" /></li>
                 </div>
             </div> <!-- end of container -->     
       <footer>

@@ -18,6 +18,18 @@ namespace AirConnect
             sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
             dbConn = new SqlConnection(sConnection);
             dbConn.Open();
+            if (Session["validated"] != null)
+            {
+                if ((bool)Session["validated"])
+                {
+                    status.Text = status.Text = "Hi " + Session["first"] + "!";
+                    signup.Visible = false;
+                }
+                else
+                    status.Text = "New user?";
+            }
+            else
+                status.Text = "New user?";
         }
 
         protected void signup_Click(object sender, EventArgs e)
@@ -44,6 +56,7 @@ namespace AirConnect
                 {
                     Session["validated"] = true;
                     errorMsg.Text = "";
+                    Session["first"] = user;
                     Response.Redirect("~/main.aspx", false);
                 }
                 else

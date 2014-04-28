@@ -33,9 +33,10 @@
 				<li><a href="main.aspx">Main</a></li>
 				<li><a href="#about">About</a></li>
               </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <asp:Button Text="Sign-up" runat="server" class="btn btn-primary" ID="signup" OnClick="signup_Click" style="margin-top: 10px;" />
-                </ul>
+                <div class="navbar-collapse collapse">
+                    <asp:Button Text="Sign-up" runat="server" class="btn btn-primary navbar-btn navbar-right" ID="signup" OnClick="signup_Click" style="margin-top: 10px;" />
+                    <asp:Label runat="server" ID="status" class="navbar-text navbar-right" ForeColor="GrayText" style="margin-right: 10px;"></asp:Label>
+                </div>
             </div><!-- /.nav-collapse -->
           </div><!-- /.container -->
         </div><!-- /.navbar -->  
@@ -47,12 +48,16 @@
 				    <form method="post">
 				      <table class="table table-hover">
 				        <tr>
-				          <td class="label" style="color:darkslategray; font-size:medium">Email</td>
-				          <td><asp:TextBox runat="server" ID="email" type="text" name="email" value=""/></td>
+                                <div class="input-group">
+                                <span class="input-group-addon">Email</span>
+				                <asp:TextBox runat="server" class="form-control" ID="email" type="text" name="email" placeholder="Please enter your Email" value=""/>
+                                </div>
 				        </tr>
 				        <tr>
-				          <td class="label" style="color:darkslategray;font-size:medium">Password</td>
-                          <td><asp:TextBox runat="server" ID="password" type="text" name="password" value=""/></td>
+                                <div class="input-group">
+                                <span class="input-group-addon">Password</span>
+                                <asp:TextBox runat="server" class="form-control" ID="password" type="text" name="password" placeholder="Please enter your Password" value=""/>
+                                </div>
 				        </tr>
 					</table>
 <!--				      <input type="submit">  -->

@@ -18,6 +18,18 @@ namespace AirConnect
             sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
             dbConn = new SqlConnection(sConnection);
             dbConn.Open();
+            if (Session["validated"] != null)
+            {
+                if ((bool)Session["validated"])
+                {
+                    status.Text = "Hi " + Session["first"] + "!";
+                    login.Visible = false;
+                }
+                else
+                    status.Text = "Already a user?";
+            }
+            else
+                status.Text = "Already a user?";
         }
 
         protected void login_Click(object sender, EventArgs e)
@@ -46,6 +58,8 @@ namespace AirConnect
             dbCmd.Connection = dbConn;
             dbCmd.ExecuteScalar();
             Session["validated"] = true;
+            Session["first"] = first;
+            Session["last"] = last;
             dbConn.Close();
             Response.Redirect("~/login.aspx", false);
         }

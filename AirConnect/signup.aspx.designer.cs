@@ -31,6 +31,15 @@ namespace AirConnect {
         protected global::System.Web.UI.WebControls.Button login;
         
         /// <summary>
+        /// status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label status;
+        
+        /// <summary>
         /// email control.
         /// </summary>
         /// <remarks>
@@ -76,15 +85,6 @@ namespace AirConnect {
         protected global::System.Web.UI.WebControls.TextBox lastName;
         
         /// <summary>
-        /// submitButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button submitButton;
-        
-        /// <summary>
         /// errorMsg control.
         /// </summary>
         /// <remarks>
@@ -92,6 +92,15 @@ namespace AirConnect {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label errorMsg;
+        
+        /// <summary>
+        /// submitButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button submitButton;
         
         /// <summary>
         /// Label1 control.
