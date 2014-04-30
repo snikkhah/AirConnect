@@ -63,7 +63,9 @@
     <Content Include="JavaScrips\bootstrap-datepicker.js" />
     <Content Include="login.aspx" />
     <Content Include="main.aspx" />
+    <Content Include="payment.aspx" />
     <Content Include="result.aspx" />
+    <Content Include="review.aspx" />
     <Content Include="signup.aspx" />
     <Content Include="StyleSheet\datepicker.css" />
     <Content Include="Web.config" />
@@ -93,6 +95,13 @@
     <Compile Include="main.aspx.designer.cs">
       <DependentUpon>main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="payment.aspx.cs">
+      <DependentUpon>payment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="payment.aspx.designer.cs">
+      <DependentUpon>payment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="result.aspx.cs">
       <DependentUpon>result.aspx</DependentUpon>
@@ -100,6 +109,13 @@
     </Compile>
     <Compile Include="result.aspx.designer.cs">
       <DependentUpon>result.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="review.aspx.cs">
+      <DependentUpon>review.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="review.aspx.designer.cs">
+      <DependentUpon>review.aspx</DependentUpon>
     </Compile>
     <Compile Include="signup.aspx.cs">
       <DependentUpon>signup.aspx</DependentUpon>

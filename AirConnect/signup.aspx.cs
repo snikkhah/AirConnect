@@ -59,6 +59,7 @@ namespace AirConnect
             dbCmd.ExecuteScalar();
             Session["validated"] = true;
             Session["first"] = first;
+            Session["EmailId"] = user;
             Session["last"] = last;
             dbConn.Close();
             Response.Redirect("~/login.aspx", false);

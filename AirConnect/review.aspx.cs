@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace AirConnect
 {
-    public partial class result : System.Web.UI.Page
+    public partial class review : System.Web.UI.Page
     {
         private String sConnection;
         private SqlConnection dbConn;
@@ -34,7 +34,6 @@ namespace AirConnect
                 login.Text = "Log-in";
                 signup.Visible = true;
             }
-
             //***********************************************************************
             try
             {
@@ -42,18 +41,8 @@ namespace AirConnect
                 dbConn = new SqlConnection(sConnection);
                 dbConn.Open();
                 string sql, format;
-                String date = (string)Session["departureDate"];
-                string[] result = date.Split('/');
-                int day = Convert.ToInt32(result[1]);
-                string lowerRange,higherRange;
-                if (day > 4)
-                    lowerRange = result[0] + "/" + (day - 4) + "/" + result[2];
-                else lowerRange = date;
-                if (day < 27)
-                    higherRange = result[0] + "/" + (day + 4) + "/" + result[2];
-                else higherRange = date;
-                format = "SELECT flightNo,Source,destination,FORMAT(DepartDate,'MM/dd/yyyy') AS DepartureDate, DepartTime, FORMAT(ArrivalDate, 'MM/dd/yyyy') AS ArrivalDate,ArrivalTime,Price FROM dbo.Flights WHERE Source = '{0}' AND destination = '{1}' AND DepartDate between '{2}' AND '{3}' Order by DepartureDate Asc";
-                sql = String.Format(format, (string)Session["origin"], (string)Session["destination"], lowerRange, higherRange);
+                format = "SELECT flightNo,Source,destination,FORMAT(DepartDate,'MM/dd/yyyy') AS DepartureDate, DepartTime, FORMAT(ArrivalDate, 'MM/dd/yyyy') AS ArrivalDate,ArrivalTime,Price FROM dbo.Flights WHERE flightNo = '{0}' Order by DepartureDate Asc";
+                sql = String.Format(format, (string)Session["toFlightNo"]);
                 SqlCommand dbCmd;
                 dbCmd = new SqlCommand();
                 dbCmd.CommandText = sql;
@@ -66,17 +55,7 @@ namespace AirConnect
                 if (Session["roundTrip"] != null)
                     if ((Boolean)Session["roundTrip"])
                     {
-                        date = (string)Session["returnDate"];
-                        result = date.Split('/');
-                        day = Convert.ToInt32(result[1]);
-                        if (day > 4)
-                            lowerRange = result[0] + "/" + (day - 4) + "/" + result[2];
-                        else lowerRange = date;
-                        if (day < 27)
-                            higherRange = result[0] + "/" + (day + 4) + "/" + result[2];
-                        else higherRange = date;
-                        format = "SELECT flightNo,Source,destination,FORMAT(DepartDate,'MM/dd/yyyy') AS DepartureDate, DepartTime, FORMAT(ArrivalDate, 'MM/dd/yyyy') AS ArrivalDate,ArrivalTime,Price FROM dbo.Flights WHERE Source = '{0}' AND destination = '{1}' AND ArrivalDate between '{2}' AND '{3}' Order by ArrivalDate Asc";
-                        sql = String.Format(format, (string)Session["destination"], (string)Session["origin"], lowerRange, higherRange);
+                        sql = String.Format(format, (string)Session["returnFlightNo"]);
                         dbCmd = new SqlCommand();
                         dbCmd.CommandText = sql;
                         dbCmd.Connection = dbConn;
@@ -116,13 +95,13 @@ namespace AirConnect
                     }
                 }
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 selectionError.Text = exp.Message;
             }
-        //********************************************************
+            //********************************************************
             string dest = (string)Session["destination"];
-            destImage.ImageUrl = "Images/"+dest.ToLower()+".jpg";
+            destImage.ImageUrl = "Images/" + dest.ToLower() + ".jpg";
             destText.Text = dest;
         }
 
@@ -145,6 +124,19 @@ namespace AirConnect
             Response.Redirect("~/signup.aspx", false);
         }
 
+        protected void confirm_Click(object sender, EventArgs e)
+        {
+            if (Session["validated"] != null)
+             if ((Boolean)Session["validated"])
+                Response.Redirect("~/payment.aspx", false);
+             else   Response.Redirect("~/login.aspx", false);
+            else Response.Redirect("~/login.aspx", false);
+        }
+        protected void cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/main.aspx", false);
+        }
+
         protected void selection_Click(object sender, EventArgs e)
         {
             //***********************************************************************
@@ -163,13 +155,6 @@ namespace AirConnect
             toDateText.Text = (string)Session["returnDate"];
             AdultNum.Text = (string)Session["adult"];
             ChildrenNum.Text = (string)Session["children"];
-        }
-
-        protected void proceed_Click(object sender, EventArgs e)
-        {
-            if (Session["toFlightNo"] != null && (((!((Boolean)Session["roundTrip"])) && Session["returnFlightNo"] == null) || ((((Boolean)Session["roundTrip"])) && Session["returnFlightNo"] != null)))
-                Response.Redirect("~/review.aspx", false);
-            selectionError.Text = "Please make sure you selected your desired flight(s)";
         }
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
@@ -206,7 +191,7 @@ namespace AirConnect
         {
             string flightNo = GridView2.SelectedRow.Cells[1].Text;
             GridView2.SelectedRow.BackColor = System.Drawing.Color.DarkSeaGreen;
-            flight2.Text = "Selected flight number: "+flightNo;
+            flight2.Text = "Selected flight number: " + flightNo;
             Session["returnFlightNo"] = flightNo;
         }
         protected void Search_Click(object sender, EventArgs e)

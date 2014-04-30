@@ -56,7 +56,13 @@ namespace AirConnect
                 {
                     Session["validated"] = true;
                     errorMsg.Text = "";
-                    Session["first"] = user;
+                    sFormat = "Select FirstName From dbo.UserAccount Where EmailId='{0}';";
+                    sql = String.Format(sFormat, user);
+                    dbCmd = new SqlCommand();
+                    dbCmd.CommandText = sql;
+                    dbCmd.Connection = dbConn;
+                    Session["first"] = (String)dbCmd.ExecuteScalar();
+                    Session["EmailId"] = user;
                     Response.Redirect("~/main.aspx", false);
                 }
                 else

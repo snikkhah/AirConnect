@@ -56,13 +56,7 @@
                          </asp:RadioButtonList>
                     <div class="row row-offcanvas row-offcanvas-right">
 				            <div class="col-xs-9 col-sm-6 sidebar-offcanvas" id="Div1" role="navigation">
-				                
-                                    <asp:DropDownList ID="origin" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px">
-                                              <asp:ListItem style="background:rgb(255, 255, 255);" Selected="True" Value="California">California</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">South Dakota</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">New Jersy</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">Key West</asp:ListItem>
-                                    </asp:DropDownList>
+                                <asp:DropDownList backColor="White" ID="origin" runat="server" AutoPostBack="True" type="button" OnSelectedIndexChanged="origin_changed" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px"/>
                                 <div class="input-group" style="margin-top:10px">
                                   <asp:TextBox runat="server" ID="fromDateText" type="text" placeholder="Click on Pick" class="form-control"/>   
                                   <span class="input-group-btn">
@@ -77,12 +71,7 @@
 				            </div><!--/span-->
 				            <div class="col-xs-9 col-sm-6">
 
-                                <asp:DropDownList ID="Destination" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px">
-                                              <asp:ListItem style="background:rgb(255, 255, 255);" Selected="True" Value="California">California</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">South Dakota</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">New Jersy</asp:ListItem>
-                                              <asp:ListItem style="background:rgb(255, 255, 255);">Key West</asp:ListItem>
-                                    </asp:DropDownList>
+                                <asp:DropDownList ID="Destination" backColor="White" runat="server" AutoPostBack="True" type="button" OnSelectedIndexChanged="destination_changed" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px"/>
                                 <div class="input-group" style="margin-top:10px">
                                   <asp:TextBox runat="server" ID="toDateText" type="text" placeholder="Click on Pick" class="form-control"/>   
                                   <span class="input-group-btn">
@@ -108,7 +97,7 @@
                     <div class="row row-offcanvas row-offcanvas-right" style="margin-left:80px;">
 				        <div class="col-xs-5 col-sm-3 sidebar-offcanvas panel panel-default" id="Div2" role="navigation" style="margin:5px">
                             <div class="thumbnail" style="margin-top: 10px;">
-                              <img src="Images/Pattaya.jpg" class="img-responsive img-rounded" alt="Thailand">
+                              <img src="Images/pattaya.jpg" class="img-responsive img-rounded" alt="Thailand">
                               <div class="caption">
                                 <h3>Thailand</h3>
                                 Check out these exotic destinations
@@ -124,7 +113,7 @@
                         </div>
                         <div class="col-xs-5 col-sm-3 sidebar-offcanvas panel panel-default" id="Div3" role="navigation" style="margin:5px">
                             <div class="thumbnail" style="margin-top: 10px;">
-                              <img src="Images/Florida.jpg" class="img-responsive img-rounded" alt="Florida">
+                              <img src="Images/florida.jpg" class="img-responsive img-rounded" alt="Florida">
                               <div class="caption">
                                 <h3>Florida</h3>
                                 Check out these exotic destinations
@@ -147,7 +136,7 @@
                               </div>
                             </div>
                             <div class="thumbnail" style="margin-top: 10px;">
-                              <img src="Images/KeyWest3.jpg" class="img-responsive img-rounded" alt="KeyWest">
+                              <img src="Images/key west.jpg" class="img-responsive img-rounded" alt="KeyWest">
                               <div class="caption">
                                 <h3>Key West</h3>
                                 Check out these exotic destinations

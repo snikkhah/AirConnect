@@ -10,7 +10,7 @@
 namespace AirConnect {
     
     
-    public partial class result {
+    public partial class review {
         
         /// <summary>
         /// Head1 control.
@@ -238,13 +238,22 @@ namespace AirConnect {
         protected global::System.Web.UI.WebControls.Label flight2;
         
         /// <summary>
-        /// proceed control.
+        /// confirm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button proceed;
+        protected global::System.Web.UI.WebControls.Button confirm;
+        
+        /// <summary>
+        /// cancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button cancel;
         
         /// <summary>
         /// selectionError control.

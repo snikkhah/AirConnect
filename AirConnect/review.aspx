@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="result.aspx.cs" Inherits="AirConnect.result" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="review.aspx.cs" Inherits="AirConnect.review" %>
 
 <!DOCTYPE html>
 
@@ -68,7 +68,7 @@
                                 <span class="input-group-addon">Adults</span>
 				                <asp:TextBox runat="server" class="form-control" ID="AdultNum" type="text" name="AdultNum" placeholder="#" value=""/>
                                 </div>
-                                <asp:Button Text="My Selections" runat="server" class="btn btn-info pull-left" ID="selections" style="margin-top: 10px;" OnClick="selection_Click"/>
+                                 <asp:Button Text="My Selections" runat="server" class="btn btn-info pull-left" ID="selections" style="margin-top: 10px;" OnClick="selection_Click"/>
 				            </div><!--/span-->
 				            <div class="col-xs-9 col-sm-6">
                                 <asp:DropDownList ID="Destination" backColor="White" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px"/>
@@ -83,7 +83,6 @@
                                 <span class="input-group-addon">Children</span>
 				                <asp:TextBox runat="server" class="form-control" ID="ChildrenNum" type="text" name="ChildrenNum" placeholder="#" value=""/>
                                 </div>
-                                
                                 <asp:Button Text="Search" runat="server" class="btn btn-success pull-right" ID="Search" style="margin-top: 10px;" OnClick="Search_Click"/>
 				            </div><!--/span-->   
 			        </div><!--/row-->
@@ -103,19 +102,14 @@
 					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>   
 				  </p>
                     <div class="panel panel-success" > 
-                      <div class="panel-heading"><h4>Please select your flight</h4></div>
+                      <div class="panel-heading"><h4>Please confirm your flight</h4></div>
                          <div class="panel-body">
-                        <asp:GridView ID="GridView1" class="table table-striped table-hover" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" style="margin-top:10px" >
-                            <Columns><asp:ButtonField Text="Click" CommandName="Select" ItemStyle-Width="30"  />
-				            </Columns>
-                        </asp:GridView>
+                        <asp:GridView ID="GridView1" class="table table-striped table-hover" runat="server" style="margin-top:10px" ></asp:GridView>
                         <asp:Label ID="flight1" runat="server" Text=""></asp:Label>
-                        <asp:GridView ID="GridView2" class="table table-striped table-hover" runat="server" OnSelectedIndexChanged="GridView2_SelectedIndexChanged" style="margin-top:10px" >
-                            <Columns><asp:ButtonField Text="Click" CommandName="Select" ItemStyle-Width="30"  />
-				            </Columns>
-                        </asp:GridView>
+                        <asp:GridView ID="GridView2" class="table table-striped table-hover" runat="server" style="margin-top:10px" ></asp:GridView>
                         <asp:Label ID="flight2" runat="server" Text=""></asp:Label>
-                        <asp:Button Text="Proceed" runat="server" class="btn btn-success pull-right" ID="proceed" style="margin-top: 10px;" OnClick="proceed_Click"/>
+                        <asp:Button Text="Confirm" runat="server" class="btn btn-success pull-right" ID="confirm" style="margin-top: 10px;" OnClick="confirm_Click"/>
+                        <asp:Button Text="Cancel" runat="server" class="btn btn-danger pull-right" ID="cancel" style="margin-top: 10px; margin-right:10px" OnClick="cancel_Click"/>
                         <asp:Label ID="selectionError" runat="server" Text=""></asp:Label>
                         </div> <!--/panel-body-->
                     </div> <!--/panel-->
