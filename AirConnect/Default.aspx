@@ -35,6 +35,7 @@
 				<li><asp:Label Text="" ForeColor="Red" ID="lblTest" runat="server" /></li>
               </ul>
                 <ul class="nav navbar-nav pull-right">
+                    <a href="profile.aspx"><asp:Label Text="" ForeColor="GrayText" Font-Size="Large" ID="status" runat="server" /></a>
                     <asp:Button Text="Log-in" runat="server" class="btn btn-success" ID="login" OnClick="login_Click" style="margin-top: 10px;" />
                     <asp:Button Text="Sign-up" runat="server" class="btn btn-primary" ID="signup" OnClick="signup_Click" style="margin-top: 10px;" />
                 </ul>

@@ -34,39 +34,47 @@ namespace AirConnect
                 login.Text = "Log-in";
                 signup.Visible = true;
             }
+            Session["CancelaionMsg"] = null;
             if (origin.Items.Count == 0)
             {
-                sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
-                dbConn = new SqlConnection(sConnection);
-                dbConn.Open();
-                string sql = "Select Source From dbo.Flights Order By Source Asc;";
-                SqlCommand dbCmd;
-                dbCmd = new SqlCommand();
-                dbCmd.CommandText = sql;
-                dbCmd.Connection = dbConn;
-                SqlDataReader dbReader;
-                dbReader = dbCmd.ExecuteReader();
-                int i = 0;
-                while (dbReader.Read())
+                try
                 {
-                    if (origin.Items.FindByText(dbReader["Source"].ToString()) == null)
+                    sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
+                    dbConn = new SqlConnection(sConnection);
+                    dbConn.Open();
+                    string sql = "Select Source From dbo.Flights Order By Source Asc;";
+                    SqlCommand dbCmd;
+                    dbCmd = new SqlCommand();
+                    dbCmd.CommandText = sql;
+                    dbCmd.Connection = dbConn;
+                    SqlDataReader dbReader;
+                    dbReader = dbCmd.ExecuteReader();
+                    int i = 0;
+                    while (dbReader.Read())
                     {
-                        origin.Items.Add(new ListItem(dbReader["Source"].ToString(), "" + i));
-                        i++;
+                        if (origin.Items.FindByText(dbReader["Source"].ToString()) == null)
+                        {
+                            origin.Items.Add(new ListItem(dbReader["Source"].ToString(), "" + i));
+                            i++;
+                        }
+                    }
+                    dbReader.Close();
+                    sql = "Select destination From dbo.Flights Order By Source Asc;";
+                    dbCmd.CommandText = sql;
+                    dbReader = dbCmd.ExecuteReader();
+                    i = 0;
+                    while (dbReader.Read())
+                    {
+                        if (Destination.Items.FindByText(dbReader["destination"].ToString()) == null)
+                        {
+                            Destination.Items.Add(new ListItem(dbReader["destination"].ToString(), "" + i));
+                            i++;
+                        }
                     }
                 }
-                dbReader.Close();
-                sql = "Select destination From dbo.Flights Order By Source Asc;";
-                dbCmd.CommandText = sql;
-                dbReader = dbCmd.ExecuteReader();
-                i = 0;
-                while (dbReader.Read())
+                catch (Exception err)
                 {
-                    if (Destination.Items.FindByText(dbReader["destination"].ToString()) == null)
-                    {
-                        Destination.Items.Add(new ListItem(dbReader["destination"].ToString(), "" + i));
-                        i++;
-                    }
+                    errorMsg.Text = err.Message;
                 }
             }
         }
@@ -81,13 +89,85 @@ namespace AirConnect
                 signup.Visible = true;
                 login.Text = "Log-in";
                 status.Text = "";
-                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                Response.Redirect("~/default.aspx", false);
             }
         }
 
         protected void signup_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/signup.aspx", false);
+        }
+
+        protected void checkFlight1_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "San Francisco";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
+        }
+
+        protected void checkFlight2_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "Denver";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
+        }
+
+        protected void checkFlight3_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "Florida";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
+        }
+
+        protected void checkFlight4_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "Hawaii";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
+        }
+
+        protected void checkFlight5_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "Miami";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
+        }
+
+        protected void checkFlight6_Click(object sender, EventArgs e)
+        {
+            Session["roundTrip"] = true;
+            Session["origin"] = "San Jose";
+            Session["destination"] = "Key West";
+            Session["departureDate"] = DateTime.Now.ToString();
+            Session["returnDate"] = DateTime.Now.ToString();
+            Session["adult"] = "1";
+            Session["children"] = "0";
+            Response.Redirect("~/result.aspx", false);
         }
 
         protected void origin_changed(object sender, EventArgs e)
@@ -135,9 +215,9 @@ namespace AirConnect
             else Session["roundTrip"] = false;
             Session["origin"] = origin.SelectedItem.Text;
             Session["destination"] = Destination.SelectedItem.Text;
-            Session["departureDate"] = Calendar1.SelectedDate.ToString("MM/dd/yyyy");
+            Session["departureDate"] = fromDateText.Text;
             if (RadioButtonTrip.SelectedItem.Text.Equals("Round Trip"))
-                Session["returnDate"] = Calendar2.SelectedDate.ToString("MM/dd/yyyy");
+                Session["returnDate"] = toDateText.Text;
             else Session["returnDate"] = "";
             String count = AdultNum.Text;
             if (count.Equals(""))
@@ -154,8 +234,8 @@ namespace AirConnect
             }
             Session["children"] = count;
             if ((origin.SelectedItem.Text).Equals(Destination.SelectedItem.Text)) errorText += "Origin and Destination should be different.\n";
-            if (((Calendar1.SelectedDate.ToString("MM/dd/yyyy")).Equals("01/01/0001")) && Session["departureDate"]==null) errorText += "Please pick you departure date.\n";
-            if (((RadioButtonTrip.SelectedItem.Text).Equals("Round Trip") && (Calendar2.SelectedDate.ToString("MM/dd/yyyy")).Equals("01/01/0001")) && Session["returnDate"] == null)
+            if (((Calendar1.SelectedDate.ToString("MM/dd/yyyy")).Equals("01/01/0001")) || ((String)Session["departureDate"]).Equals("01/01/0001")) errorText += "Please pick you departure date.\n";
+            if ((RadioButtonTrip.SelectedItem.Text).Equals("Round Trip") && (((String)Session["returnDate"]).Equals("") || ((String)Session["returnDate"]).Equals("01/01/0001")))
                 errorText += "Please pick you return date.\n";
             errorMsg.Text = errorText;
             if (errorText.Equals(""))

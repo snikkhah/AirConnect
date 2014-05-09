@@ -15,21 +15,28 @@ namespace AirConnect
         private SqlConnection dbConn;
         protected void Page_Load(object sender, EventArgs e)
         {
-            sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
-            dbConn = new SqlConnection(sConnection);
-            dbConn.Open();
-            if (Session["validated"] != null)
+            try
             {
-                if ((bool)Session["validated"])
+                sConnection = "Server=suavo;Database=AirConnect;Integrated Security=true;";
+                dbConn = new SqlConnection(sConnection);
+                dbConn.Open();
+                if (Session["validated"] != null)
                 {
-                    status.Text = "Hi " + Session["first"] + "!";
-                    login.Visible = false;
+                    if ((bool)Session["validated"])
+                    {
+                        status.Text = "Hi " + Session["first"] + "!";
+                        login.Visible = false;
+                    }
+                    else
+                        status.Text = "Already a user?";
                 }
                 else
                     status.Text = "Already a user?";
             }
-            else
-                status.Text = "Already a user?";
+            catch (Exception exp)
+            {
+                errorMsg.Text = exp.Message;
+            }
         }
 
         protected void login_Click(object sender, EventArgs e)
@@ -49,20 +56,30 @@ namespace AirConnect
                 errorMsg.Text = "Passwords don't match. Please try again.";
                 return;
             }
-            string sql, sFormat;
-            sFormat = "Insert Into UserAccount(UserId,EmailId,FirstName,LastName,Password,point) Values({0}, '{1}', '{2}','{3}','{4}',{5});";
-            sql = String.Format(sFormat, MaxCID()+1, user, first, last, pass, 1000);
-            SqlCommand dbCmd;
-            dbCmd = new SqlCommand();
-            dbCmd.CommandText = sql;
-            dbCmd.Connection = dbConn;
-            dbCmd.ExecuteScalar();
-            Session["validated"] = true;
-            Session["first"] = first;
-            Session["EmailId"] = user;
-            Session["last"] = last;
-            dbConn.Close();
-            Response.Redirect("~/login.aspx", false);
+            try
+            {
+                string sql, sFormat;
+                sFormat = "Insert Into UserAccount(UserId,EmailId,FirstName,LastName,Password,point) Values({0}, '{1}', '{2}','{3}','{4}',{5});";
+                int maxId = MaxCID();
+                sql = String.Format(sFormat, maxId + 1, user, first, last, pass, 1000);
+                SqlCommand dbCmd;
+                dbCmd = new SqlCommand();
+                dbCmd.CommandText = sql;
+                dbCmd.Connection = dbConn;
+                dbCmd.ExecuteScalar();
+                Session["validated"] = true;
+                Session["first"] = first;
+                Session["EmailId"] = user;
+                Session["last"] = last;
+                Session["point"] = 1000;
+                Session["UserId"] = maxId;
+                dbConn.Close();
+                Response.Redirect("~/login.aspx", false);
+            }
+            catch (Exception exp)
+            {
+                errorMsg.Text = exp.Message;
+            }
         }
         protected int MaxCID()
         {

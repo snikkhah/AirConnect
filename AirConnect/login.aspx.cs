@@ -42,27 +42,27 @@ namespace AirConnect
             String user = email.Text;
             String pass = password.Text;
             string sql, sFormat;
-            sFormat = "Select Password From dbo.UserAccount Where EmailId='{0}';";
-            sql = String.Format(sFormat, user);
-            SqlCommand dbCmd;
-            dbCmd = new SqlCommand();
-            dbCmd.CommandText = sql;
-            dbCmd.Connection = dbConn;
-            String dbpass = "";
             try
             {
-                dbpass = (String)dbCmd.ExecuteScalar();
+                sFormat = "Select * From dbo.UserAccount Where EmailId='{0}';";
+                sql = String.Format(sFormat, user);
+                SqlCommand dbCmd;
+                dbCmd = new SqlCommand();
+                dbCmd.CommandText = sql;
+                dbCmd.Connection = dbConn;
+                SqlDataReader dbReader;
+                dbReader = dbCmd.ExecuteReader();
+                dbReader.Read();
+                String dbpass = dbReader["Password"].ToString();
                 if (dbpass.Equals(pass))
                 {
                     Session["validated"] = true;
                     errorMsg.Text = "";
-                    sFormat = "Select FirstName From dbo.UserAccount Where EmailId='{0}';";
-                    sql = String.Format(sFormat, user);
-                    dbCmd = new SqlCommand();
-                    dbCmd.CommandText = sql;
-                    dbCmd.Connection = dbConn;
-                    Session["first"] = (String)dbCmd.ExecuteScalar();
+                    Session["first"] = dbReader["FirstName"].ToString();
+                    Session["last"] = dbReader["LastName"].ToString();
                     Session["EmailId"] = user;
+                    Session["point"] = dbReader["point"].ToString();
+                    Session["UserId"] = (int)dbReader["UserId"];
                     Response.Redirect("~/main.aspx", false);
                 }
                 else
@@ -72,7 +72,10 @@ namespace AirConnect
 //                   ((Literal)login1.FindControl("FailureText")).Text = "Your login attempt was not successful. Please try again.";
                 }
             }
-            catch (Exception) { }
+            catch (Exception err) 
+            {
+                errorMsg.Text = err.Message;
+            }
         }
     }
 }

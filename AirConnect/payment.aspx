@@ -31,10 +31,11 @@
 				  <ul class="nav navbar-nav">
 					<li><a href="Default.aspx">Home</a></li>
 					<li class="active"><a href="main.aspx">Main</a></li>
+                    <li><a href="manageBookings.aspx">ManageBooking</a></li>
 					<li><a href="#about">About</a></li>
 				  </ul>
 					<ul class="nav navbar-nav pull-right">
-                        <asp:Label Text="" ForeColor="GrayText" Font-Size="Large" ID="status" runat="server" />
+                         <a href="profile.aspx"><asp:Label Text="" ForeColor="GrayText" Font-Size="Large" ID="status" runat="server" /></a>
 						<asp:Button Text="Log-in" runat="server" class="btn btn-success" ID="login" OnClick="login_Click" style="margin-top: 10px;" />
 						<asp:Button Text="Sign-up" runat="server" class="btn btn-primary" ID="signup" OnClick="signup_Click" style="margin-top: 10px;" />
 					</ul>
@@ -46,7 +47,7 @@
 		<div class="container">
 			<div class="jumbotron">
                 <div class="panel panel-success" > 
-                    <div class="panel-heading"><h4>Please proceed with the payment</h4></div>
+                    <div class="panel-heading"><h4>Please proceed with the payment<span class="glyphicon glyphicon-usd pull-right"></span><span class="glyphicon glyphicon-barcode pull-right"></span></h4></div>
                         <div class="panel-body">
 			            <asp:GridView ID="GridView1" class="table table-striped table-hover" runat="server" style="margin-top:10px" >
 			            </asp:GridView>

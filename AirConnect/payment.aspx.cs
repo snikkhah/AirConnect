@@ -27,6 +27,8 @@ namespace AirConnect
                 {
                     login.Text = "Log-in";
                     signup.Visible = true;
+                    Response.Redirect("~/login.aspx", false);
+                    return;
                 }
             }
             else
@@ -94,12 +96,14 @@ namespace AirConnect
                 Session["sum"] = sum;
                 cost.Text = ""+sum;
                 dbReader.Close();
-                format = "SELECT point FROM dbo.UserAccount WHERE EmailId='{0}'";
+/*                format = "SELECT point FROM dbo.UserAccount WHERE EmailId='{0}'";
                 sql = String.Format(format, (string)Session["EmailId"]);
                 dbCmd = new SqlCommand();
                 dbCmd.CommandText = sql;
                 dbCmd.Connection = dbConn;
                 Session["point"] = balance.Text = ""+dbCmd.ExecuteScalar();
+ */
+                balance.Text = ""+Session["point"];
             //***********************************************************************
             }
             catch (Exception exp)
@@ -117,7 +121,7 @@ namespace AirConnect
                 signup.Visible = true;
                 login.Text = "Log-in";
                 status.Text = "";
-                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                Response.Redirect("~/default.aspx", false);
             }
         }
 
@@ -132,22 +136,52 @@ namespace AirConnect
             }
             else
             {
-
-                double newbalance = myBalance - totalPrice;
-                string sql, format;
-                format = "Update dbo.UserAccount Set point = {0} Where EmailId='{1}'";
-                sql = String.Format(format, newbalance, (string)Session["EmailId"]);
-                SqlCommand dbCmd;
-                dbCmd = new SqlCommand();
-                dbCmd.CommandText = sql;
-                dbCmd.Connection = dbConn;
-                dbCmd.ExecuteScalar();
-                paymentError.Text = "Your new balance is: "+newbalance;
-                balance.Text = ""+newbalance;
-                pay.Visible = false;
-                cancel.Visible = false;
-                print.Visible = true;
-                home.Visible = true;
+                try
+                {
+                    //update Balance
+                    double newbalance = myBalance - totalPrice;
+                    string sql, format;
+                    format = "Update dbo.UserAccount Set point = {0} Where EmailId='{1}'";
+                    sql = String.Format(format, newbalance, (string)Session["EmailId"]);
+                    SqlCommand dbCmd;
+                    dbCmd = new SqlCommand();
+                    dbCmd.CommandText = sql;
+                    dbCmd.Connection = dbConn;
+                    dbCmd.ExecuteScalar();
+                    paymentError.Text = "Your new balance is: " + newbalance;
+                    balance.Text = "" + newbalance;
+                    pay.Visible = false;
+                    cancel.Visible = false;
+                    print.Visible = true;
+                    home.Visible = true;
+                    //add booking into Booking table
+                    format = "Insert Into dbo.Bookings (UserId,FlightNo,Adults,Children,History) Values({0}, '{1}', {2}, {3}, {4});";
+                    sql = String.Format(format, (int)Session["UserId"], (string)Session["toFlightNo"], (string)Session["adult"], (string)Session["children"], 0);
+                    dbCmd = new SqlCommand();
+                    dbCmd.CommandText = sql;
+                    dbCmd.Connection = dbConn;
+                    dbCmd.ExecuteScalar();
+                    if ((Boolean)Session["roundTrip"])
+                    {
+                        sql = String.Format(format, (int)Session["UserId"], (string)Session["returnFlightNo"], (string)Session["adult"], (string)Session["children"], 0);
+                        dbCmd = new SqlCommand();
+                        dbCmd.CommandText = sql;
+                        dbCmd.Connection = dbConn;
+                        dbCmd.ExecuteScalar();
+                    }
+                    Session["roundTrip"] = false;
+                    Session["origin"] = "";
+                    Session["destination"] = "";
+                    Session["departureDate"] = "";
+                    Session["returnDate"] = "";
+                    Session["adult"] = "";
+                    Session["children"] = "";
+                    Session["point"] = newbalance;
+                }
+                catch (Exception err)
+                {
+                    paymentError.Text = err.Message; 
+                }
             }
         }
         protected void print_Click(object sender, EventArgs e)

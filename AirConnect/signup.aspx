@@ -31,6 +31,7 @@
               <ul class="nav navbar-nav">
                 <li><a href="Default.aspx">Home</a></li>
 			    <li><a href="main.aspx">Main</a></li>
+                <li><a href="manageBookings.aspx">ManageBooking</a></li>
 			    <li><a href="#about">About</a></li>
               </ul>
                 <div class="navbar-collapse collapse">
@@ -56,13 +57,13 @@
 				        <tr>
 				          <div class="input-group">
 				            <span class="input-group-addon">Password</span>
-				            <asp:TextBox runat="server" ID="password" type="text" name="password" value="" class="form-control" placeholder="Please enter your Password"/>
+				            <asp:TextBox runat="server" ID="password" type="password" name="password" value="" class="form-control" placeholder="Please enter your Password"/>
 				          </div>
 				        </tr>
 				        <tr>
                             <div class="input-group">
 				            <span class="input-group-addon">Confirm Password</span>
-				            <asp:TextBox runat="server" ID="confirmPassword" type="text" name="confirmPassword" value="" class="form-control" placeholder="Please enter your Password again"/>
+				            <asp:TextBox runat="server" ID="confirmPassword" type="password" name="confirmPassword" value="" class="form-control" placeholder="Please enter your Password again"/>
 				            </div>
 				        </tr>				
 						<tr>
@@ -78,8 +79,8 @@
 					</table>
 <!--				      <input type="submit">  -->
 				    </form>
-                    <li><asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" /></li>
 				    <asp:Button runat="server" ID="submitButton" Text="Submit" class="btn btn-primary" OnClick="submitButton_Click"/>
+                    <asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" />
                 </div>
             </div> <!-- end of container -->     
       <footer>

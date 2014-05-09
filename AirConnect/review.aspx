@@ -31,10 +31,11 @@
 				  <ul class="nav navbar-nav">
 					<li><a href="Default.aspx">Home</a></li>
 					<li class="active"><a href="main.aspx">Main</a></li>
+                    <li><a href="manageBookings.aspx">ManageBooking</a></li>
 					<li><a href="#about">About</a></li>
 				  </ul>
 					<ul class="nav navbar-nav pull-right">
-                        <asp:Label Text="" ForeColor="GrayText" Font-Size="Large" ID="status" runat="server" />
+                         <a href="profile.aspx"><asp:Label Text="" ForeColor="GrayText" Font-Size="Large" ID="status" runat="server" /></a>
 						<asp:Button Text="Log-in" runat="server" class="btn btn-success" ID="login" OnClick="login_Click" style="margin-top: 10px;" />
 						<asp:Button Text="Sign-up" runat="server" class="btn btn-primary" ID="signup" OnClick="signup_Click" style="margin-top: 10px;" />
 					</ul>
@@ -48,15 +49,16 @@
 			  <div class="row row-offcanvas row-offcanvas-right">
 				<div class="col-xs-6 col-sm-3 sidebar-offcanvas panel panel-default" id="sidebar" role="navigation" >
 				  <div class="panel panel-success" style="margin-top:20px"> 
-                      <div class="panel-heading"><h4>Please select your search criteria</h4></div>
+                      <div class="panel-heading"><h4>Please select your search criteria<span class="glyphicon glyphicon-calendar pull-right"></span></h4></div>
                       <div class="panel-body">
-                          <asp:RadioButtonList id="RadioButtonTrip" runat="server" RepeatDirection="Horizontal" Width="182px">
+                          <asp:RadioButtonList id="RadioButtonTrip" runat="server" RepeatDirection="Horizontal" Width="50%">
                             <asp:ListItem Selected="True">Oneway</asp:ListItem>
                             <asp:ListItem>Round Trip</asp:ListItem>
                          </asp:RadioButtonList>
                     <div class="row row-offcanvas row-offcanvas-right">
-				            <div class="col-xs-9 col-sm-6 sidebar-offcanvas" id="Div1" role="navigation">			                
-                                <asp:DropDownList backColor="White" ID="origin" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px"/>
+				            <div class="col-xs-9 col-sm-6 sidebar-offcanvas" id="Div1" role="navigation">		
+                                <h4>From:</h4>	                
+                                <asp:DropDownList backColor="White" ID="origin" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px;width: 100%;"/>
                                 <div class="input-group" style="margin-top:10px">
                                   <asp:TextBox runat="server" ID="fromDateText" type="text" placeholder="Click on Pick" class="form-control"/>   
                                   <span class="input-group-btn">
@@ -64,14 +66,15 @@
                                   </span>
                                 </div><!-- /input-group -->
                                 <asp:Calendar ID="Calendar1" runat="server" BackColor="#D0F5AE" Visible="false" OnSelectionChanged="Calendar1_SelectionChanged"></asp:Calendar>
-                                <div class="input-group" style="margin-top:10px">
+                                <div class="input-group" style="margin-top:10px;width: 100%;">
                                 <span class="input-group-addon">Adults</span>
 				                <asp:TextBox runat="server" class="form-control" ID="AdultNum" type="text" name="AdultNum" placeholder="#" value=""/>
                                 </div>
                                  <asp:Button Text="My Selections" runat="server" class="btn btn-info pull-left" ID="selections" style="margin-top: 10px;" OnClick="selection_Click"/>
 				            </div><!--/span-->
 				            <div class="col-xs-9 col-sm-6">
-                                <asp:DropDownList ID="Destination" backColor="White" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px" Width="182px"/>
+                                <h4>To:</h4>
+                                <asp:DropDownList ID="Destination" backColor="White" runat="server" AutoPostBack="True" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="margin-top:10px;width: 100%;" />
                                 <div class="input-group" style="margin-top:10px">
                                     <asp:TextBox runat="server" ID="toDateText" type="text" placeholder="Click on Pick" class="form-control" />   
                                   <span class="input-group-btn">
@@ -79,14 +82,14 @@
                                   </span>
                                 </div><!-- /input-group -->
                                 <asp:Calendar ID="Calendar2" runat="server" Visible="false" BackColor="#D0F5AE" OnSelectionChanged="Calendar2_SelectionChanged"></asp:Calendar>
-                                <div class="input-group" style="margin-top:10px">
+                                <div class="input-group" style="margin-top:10px;width: 100%;">
                                 <span class="input-group-addon">Children</span>
 				                <asp:TextBox runat="server" class="form-control" ID="ChildrenNum" type="text" name="ChildrenNum" placeholder="#" value=""/>
                                 </div>
                                 <asp:Button Text="Search" runat="server" class="btn btn-success pull-right" ID="Search" style="margin-top: 10px;" OnClick="Search_Click"/>
 				            </div><!--/span-->   
 			        </div><!--/row-->
-                          <li><asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" /></li>
+                    <asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" />
                     </div><!--/panel Body-->
                 </div><!--/panel-->
                     <div class="thumbnail" style="margin-top: 10px;">
@@ -102,10 +105,12 @@
 					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>   
 				  </p>
                     <div class="panel panel-success" > 
-                      <div class="panel-heading"><h4>Please confirm your flight</h4></div>
+                      <div class="panel-heading"><h4>Please confirm your flight<span class="glyphicon glyphicon-lock pull-right"></span></h4></div>
                          <div class="panel-body">
+                        <asp:Label runat="server"><h3>Departing Flight</h3></asp:Label>
                         <asp:GridView ID="GridView1" class="table table-striped table-hover" runat="server" style="margin-top:10px" ></asp:GridView>
                         <asp:Label ID="flight1" runat="server" Text=""></asp:Label>
+                        <asp:Label ID="returnTitle" Visible="false" runat="server"><h3>Return Flight</h3></asp:Label>
                         <asp:GridView ID="GridView2" class="table table-striped table-hover" runat="server" style="margin-top:10px" ></asp:GridView>
                         <asp:Label ID="flight2" runat="server" Text=""></asp:Label>
                         <asp:Button Text="Confirm" runat="server" class="btn btn-success pull-right" ID="confirm" style="margin-top: 10px;" OnClick="confirm_Click"/>

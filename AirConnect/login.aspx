@@ -56,13 +56,13 @@
 				        <tr>
                                 <div class="input-group">
                                 <span class="input-group-addon">Password</span>
-                                <asp:TextBox runat="server" class="form-control" ID="password" type="text" name="password" placeholder="Please enter your Password" value=""/>
+                                <asp:TextBox runat="server" class="form-control" ID="password" type="password" name="password" placeholder="Please enter your Password" value=""/>
                                 </div>
 				        </tr>
 					</table>
 <!--				      <input type="submit">  -->
 				    </form>
-				    <li><asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" /></li>
+				    <asp:Label Text="" ForeColor="Red" ID="errorMsg" runat="server" />
 				    <asp:Button runat="server" ID="loginButton" Text="Login" class="btn btn-primary" OnClick="loginButton_Click"/>
                     <!-- calls getBooks() from HomeResource -->
                 </div>

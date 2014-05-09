@@ -85,6 +85,7 @@ namespace AirConnect
                         adapter.Fill(set);
                         GridView2.DataSource = set;
                         GridView2.DataBind();
+                        returnTitle.Visible = true;
                     }
                 //*******************************************************************************
                 sql = "Select Source From dbo.Flights Order By Source Asc;";
@@ -136,7 +137,7 @@ namespace AirConnect
                 signup.Visible = true;
                 login.Text = "Log-in";
                 status.Text = "";
-                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                Response.Redirect("~/default.aspx", false);
             }
         }
 
@@ -147,29 +148,53 @@ namespace AirConnect
 
         protected void selection_Click(object sender, EventArgs e)
         {
-            //***********************************************************************
-            if (Session["roundTrip"] != null)
-                if ((Boolean)Session["roundTrip"])
-                    RadioButtonTrip.SelectedIndex = 1;
-                else
-                    RadioButtonTrip.SelectedIndex = 0;
-            if (origin.SelectedItem != null)
-                if (!origin.SelectedItem.Text.Equals(""))
-                    origin.SelectedItem.Text = (string)Session["origin"];
-            if (Destination.SelectedItem != null)
-                if (!Destination.SelectedItem.Text.Equals(""))
-                    Destination.SelectedItem.Text = (string)Session["destination"];
-            fromDateText.Text = (string)Session["departureDate"];
-            toDateText.Text = (string)Session["returnDate"];
-            AdultNum.Text = (string)Session["adult"];
-            ChildrenNum.Text = (string)Session["children"];
+            try
+            {
+                if (Session["roundTrip"] != null)
+                    if ((Boolean)Session["roundTrip"])
+                        RadioButtonTrip.SelectedIndex = 1;
+                    else
+                        RadioButtonTrip.SelectedIndex = 0;
+                if (origin.SelectedItem != null)
+                    if (!origin.SelectedItem.Text.Equals(""))
+                        origin.SelectedItem.Text = (string)Session["origin"];
+                if (Destination.SelectedItem != null)
+                    if (!Destination.SelectedItem.Text.Equals(""))
+                        Destination.SelectedItem.Text = (string)Session["destination"];
+                fromDateText.Text = (string)Session["departureDate"];
+                toDateText.Text = (string)Session["returnDate"];
+                AdultNum.Text = (string)Session["adult"];
+                ChildrenNum.Text = (string)Session["children"];
+            }
+            catch (Exception err)
+            {
+                selectionError.Text = err.Message;
+            }
         }
 
         protected void proceed_Click(object sender, EventArgs e)
         {
-            if (Session["toFlightNo"] != null && (((!((Boolean)Session["roundTrip"])) && Session["returnFlightNo"] == null) || ((((Boolean)Session["roundTrip"])) && Session["returnFlightNo"] != null)))
-                Response.Redirect("~/review.aspx", false);
-            selectionError.Text = "Please make sure you selected your desired flight(s)";
+            try
+            {
+                Boolean returnTrip = (Boolean)Session["roundTrip"];
+                if (!returnTrip){
+                    if (Session["toFlightNo"] != null && !((string)Session["toFlightNo"]).Equals(""))
+                    {
+                    Response.Redirect("~/review.aspx", false);
+                    return;}
+                }
+                else {
+                    if (Session["returnFlightNo"] != null && !((string)Session["returnFlightNo"]).Equals("") && Session["toFlightNo"] != null && !((string)Session["toFlightNo"]).Equals(""))
+                    {
+                        Response.Redirect("~/review.aspx", false);
+                        return;}
+                }
+                selectionError.Text = "Please make sure you selected your desired flight(s)";
+            }
+            catch (Exception err)
+            {
+                selectionError.Text = err.Message;
+            }
         }
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
@@ -197,20 +222,36 @@ namespace AirConnect
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string flightNo = GridView1.SelectedRow.Cells[1].Text;
-            GridView1.SelectedRow.BackColor = System.Drawing.Color.DarkSeaGreen;
-            Session["toFlightNo"] = flightNo;
-            flight1.Text = "Selected flight number: " + flightNo;
+            try
+            {
+                string flightNo = GridView1.SelectedRow.Cells[1].Text;
+                GridView1.SelectedRow.BackColor = System.Drawing.Color.DarkSeaGreen;
+                Session["toFlightNo"] = flightNo;
+                flight1.Text = "Selected flight number: " + flightNo;
+            }
+            catch (Exception err)
+            {
+                selectionError.Text = err.Message;
+            }
         }
         protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string flightNo = GridView2.SelectedRow.Cells[1].Text;
-            GridView2.SelectedRow.BackColor = System.Drawing.Color.DarkSeaGreen;
-            flight2.Text = "Selected flight number: "+flightNo;
-            Session["returnFlightNo"] = flightNo;
+            try
+            {
+                string flightNo = GridView2.SelectedRow.Cells[1].Text;
+                GridView2.SelectedRow.BackColor = System.Drawing.Color.DarkSeaGreen;
+                flight2.Text = "Selected flight number: " + flightNo;
+                Session["returnFlightNo"] = flightNo;
+            }
+            catch (Exception err)
+            {
+                selectionError.Text = err.Message;
+            }
         }
         protected void Search_Click(object sender, EventArgs e)
         {
+            Session["toFlightNo"] = false;
+            Session["returnFlightNo"] = false;
             String errorText = "";
             errorMsg.Text = errorText;
             if (RadioButtonTrip.SelectedItem.Text.Equals("Round Trip"))
@@ -218,9 +259,9 @@ namespace AirConnect
             else Session["roundTrip"] = false;
             Session["origin"] = origin.SelectedItem.Text;
             Session["destination"] = Destination.SelectedItem.Text;
-            Session["departureDate"] = Calendar1.SelectedDate.ToString("MM/dd/yyyy");
+            Session["departureDate"] = fromDateText.Text;
             if (RadioButtonTrip.SelectedItem.Text.Equals("Round Trip"))
-                Session["returnDate"] = Calendar2.SelectedDate.ToString("MM/dd/yyyy");
+                Session["returnDate"] = toDateText.Text;
             else Session["returnDate"] = "";
             String count = AdultNum.Text;
             if (count.Equals(""))
@@ -237,8 +278,8 @@ namespace AirConnect
             }
             Session["children"] = count;
             if ((origin.SelectedItem.Text).Equals(Destination.SelectedItem.Text)) errorText += "Origin and Destination should be different.\n";
-            if (((Calendar1.SelectedDate.ToString("MM/dd/yyyy")).Equals("01/01/0001")) && Session["departureDate"] == null) errorText += "Please pick you departure date.\n";
-            if (((RadioButtonTrip.SelectedItem.Text).Equals("Round Trip") && (Calendar2.SelectedDate.ToString("MM/dd/yyyy")).Equals("01/01/0001")) && Session["returnDate"] == null)
+            if (((String)Session["departureDate"]).Equals("") || ((String)Session["departureDate"]).Equals("01/01/0001")) errorText += "Please pick you departure date.\n";
+            if ((RadioButtonTrip.SelectedItem.Text).Equals("Round Trip") && (((String)Session["returnDate"]).Equals("") || ((String)Session["returnDate"]).Equals("01/01/0001")))
                 errorText += "Please pick you return date.\n";
             errorMsg.Text = errorText;
             if (errorText.Equals(""))

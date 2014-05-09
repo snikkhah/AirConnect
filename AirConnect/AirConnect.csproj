@@ -58,12 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="editProfile.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\travel_wallpaper.jpg" />
     <Content Include="JavaScrips\bootstrap-datepicker.js" />
     <Content Include="login.aspx" />
     <Content Include="main.aspx" />
+    <Content Include="manageBookings.aspx" />
     <Content Include="payment.aspx" />
+    <Content Include="profile.aspx" />
     <Content Include="result.aspx" />
     <Content Include="review.aspx" />
     <Content Include="signup.aspx" />
@@ -77,6 +80,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editProfile.aspx.cs">
+      <DependentUpon>editProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editProfile.aspx.designer.cs">
+      <DependentUpon>editProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -95,12 +105,26 @@
     <Compile Include="main.aspx.designer.cs">
       <DependentUpon>main.aspx</DependentUpon>
     </Compile>
+    <Compile Include="manageBookings.aspx.cs">
+      <DependentUpon>manageBookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="manageBookings.aspx.designer.cs">
+      <DependentUpon>manageBookings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="payment.aspx.cs">
       <DependentUpon>payment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="payment.aspx.designer.cs">
       <DependentUpon>payment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="profile.aspx.cs">
+      <DependentUpon>profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="profile.aspx.designer.cs">
+      <DependentUpon>profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="result.aspx.cs">
